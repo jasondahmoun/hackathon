@@ -15,7 +15,7 @@ class Affectation
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'affectations')]
-    private ?Employee $emplye = null;
+    private ?Employee $employe = null;
 
     #[ORM\ManyToOne(inversedBy: 'affectations')]
     private ?Chantier $chantier = null;
@@ -30,12 +30,12 @@ class Affectation
 
     public function getEmplye(): ?Employee
     {
-        return $this->emplye;
+        return $this->employe;
     }
 
-    public function setEmplye(?Employee $emplye): static
+    public function setEmplye(?Employee $employe): static
     {
-        $this->emplye = $emplye;
+        $this->employe = $employe;
 
         return $this;
     }
