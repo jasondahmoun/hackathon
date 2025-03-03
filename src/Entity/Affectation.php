@@ -28,12 +28,12 @@ class Affectation
         return $this->id;
     }
 
-    public function getEmplye(): ?Employee
+    public function getEmploye(): ?Employee
     {
         return $this->employe;
     }
 
-    public function setEmplye(?Employee $employe): static
+    public function setEmploye(?Employee $employe): static
     {
         $this->employe = $employe;
 
