@@ -121,6 +121,11 @@ class Chantier
         return $this->employes_affectes;
     }
 
+    public function __toString(): string
+    {
+        return $this->nom;
+    }
+
     public function addEmployesAffecte(Employee $employesAffecte): static
     {
         if (!$this->employes_affectes->contains($employesAffecte)) {
