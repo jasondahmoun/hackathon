@@ -8,6 +8,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Chantier;
 use App\Entity\Affectation;
+use App\Entity\Besoin;
+use App\Entity\Competence;
+use App\Entity\Employee;
+use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 
@@ -32,5 +36,9 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Chantiers', 'fas fa-list', Chantier::class);
         yield MenuItem::linkToCrud('Affectations', 'fas fa-tasks', Affectation::class);
+        yield MenuItem::linkToCrud('Besoins', 'fas fa-clipboard-list', Besoin::class);
+        yield MenuItem::linkToCrud('Compétences', 'fas fa-brain', Competence::class);
+        yield MenuItem::linkToCrud('Employés', 'fas fa-users', Employee::class);
+        yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-user', User::class);
     }
 }
