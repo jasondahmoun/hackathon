@@ -3,32 +3,34 @@
 {% block title %}Chantier{% endblock %}
 
 {% block body %}
-    <h1>Chantier</h1>
-
-    <table class="table">
+<div style="max-width: 960px; margin: 40px auto; padding: 20px; background: #fff; border: 1px solid #ddd; border-radius: 4px;">
+    <h1 style="margin-bottom: 20px;">Chantier</h1>
+    <table style="width: 100%; border-collapse: collapse;">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ chantier.id }}</td>
+                <th style="padding: 10px; border: 1px solid #ddd; background-color: #f2f2f2;">Id</th>
+                <td style="padding: 10px; border: 1px solid #ddd;">{{ chantier.id }}</td>
             </tr>
             <tr>
-                <th>Nom</th>
-                <td>{{ chantier.nom }}</td>
+                <th style="padding: 10px; border: 1px solid #ddd; background-color: #f2f2f2;">Nom</th>
+                <td style="padding: 10px; border: 1px solid #ddd;">{{ chantier.nom }}</td>
             </tr>
             <tr>
-                <th>Adresse</th>
-                <td>{{ chantier.adresse }}</td>
+                <th style="padding: 10px; border: 1px solid #ddd; background-color: #f2f2f2;">Adresse</th>
+                <td style="padding: 10px; border: 1px solid #ddd;">{{ chantier.adresse }}</td>
             </tr>
             <tr>
-                <th>Date_debut</th>
-                <td>{{ chantier.dateDebut ? chantier.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
+                <th style="padding: 10px; border: 1px solid #ddd; background-color: #f2f2f2;">Date_debut</th>
+                <td style="padding: 10px; border: 1px solid #ddd;">{{ chantier.dateDebut ? chantier.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th>Date_fin</th>
-                <td>{{ chantier.dateFin ? chantier.dateFin|date('Y-m-d H:i:s') : '' }}</td>
+                <th style="padding: 10px; border: 1px solid #ddd; background-color: #f2f2f2;">Date_fin</th>
+                <td style="padding: 10px; border: 1px solid #ddd;">{{ chantier.dateFin ? chantier.dateFin|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
         </tbody>
     </table>
-
-    <a href="{{ path('app_chantier_index') }}">back to list</a>
+    <div style="margin-top: 20px;">
+        <a href="{{ path('app_chantier_index') }}" style="display: inline-block; padding: 10px 15px; background-color: #343a40; color: #fff; border-radius: 4px; text-decoration: none;">Back to list</a>
+    </div>
+</div>
 {% endblock %}

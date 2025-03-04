@@ -2,39 +2,43 @@
 
 {% block title %}Employee index{% endblock %}
 {% block body %}
-    <h1>Employee index</h1>
-    <table class="table">
+<div style="max-width: 960px; margin: 40px auto; padding: 20px; background: #fff; border: 1px solid #ddd; border-radius: 4px;">
+    <h1 style="margin-bottom: 20px;">Employee index</h1>
+    <table style="width: 100%; border-collapse: collapse;">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Prenom</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Disponibilite</th>
-                <th>actions</th>
+            <tr style="background-color: #343a40; color: #fff;">
+                <th style="padding: 10px; border: 1px solid #ddd;">Id</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Nom</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Prenom</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Email</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Role</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Disponibilite</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for employee in employees %}
-            <tr>
-                <td>{{ employee.id }}</td>
-                <td>{{ employee.nom }}</td>
-                <td>{{ employee.prenom }}</td>
-                <td>{{ employee.email }}</td>
-                <td>{{ employee.role }}</td>
-                <td>{{ employee.disponibilite ? 'Yes' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('app_employee_show', {'id': employee.id}) }}">show</a>
-                    <a href="{{ path('app_employee_edit', {'id': employee.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
+            {% for employee in employees %}
+                <tr>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{{ employee.id }}</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{{ employee.nom }}</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{{ employee.prenom }}</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{{ employee.email }}</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{{ employee.role }}</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{{ employee.disponibilite ? 'Yes' : 'No' }}</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">
+                        <a href="{{ path('app_employee_show', {'id': employee.id}) }}" style="margin-right: 10px;">Show</a>
+                        <a href="{{ path('app_employee_edit', {'id': employee.id}) }}">Edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7" style="padding: 10px; border: 1px solid #ddd; text-align: center;">No records found</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
-    <a href="{{ path('app_employee_new') }}">Create new</a>
+    <div style="margin-top: 20px;">
+        <a href="{{ path('app_employee_new') }}" style="display: inline-block; padding: 10px 15px; background-color: #343a40; color: #fff; border-radius: 4px; text-decoration: none;">Create new</a>
+    </div>
+</div>
 {% endblock %}

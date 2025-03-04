@@ -1,4 +1,6 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div style="max-width: 400px; margin: 40px auto; padding: 20px; background: #fff; border: 1px solid #ddd; border-radius: 4px;">
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button type="submit" style="width: 100%; padding: 10px; background-color: #343a40; color: #fff; border: none; border-radius: 4px; cursor: pointer;">{{ button_label|default('Save') }}</button>
+    {{ form_end(form) }}
+</div>

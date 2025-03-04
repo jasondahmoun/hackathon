@@ -1,39 +1,38 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Chantier index{% endblock %}
-
 {% block body %}
-    <h1>Chantier index</h1>
-
-    <table class="table">
+<div style="max-width: 960px; margin: 40px auto; padding: 20px; background: #fff; border: 1px solid #ddd; border-radius: 4px;">
+    <h1 style="margin-bottom: 20px;">Chantier index</h1>
+    <table style="width: 100%; border-collapse: collapse;">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Adresse</th>
-                <th>Date_debut</th>
-                <th>Date_fin</th>
-                <th>actions</th>
+            <tr style="background-color: #343a40; color: #fff;">
+                <th style="padding: 10px; border: 1px solid #ddd;">Id</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Nom</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Adresse</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Date_debut</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Date_fin</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for chantier in chantiers %}
-            <tr>
-                <td>{{ chantier.id }}</td>
-                <td>{{ chantier.nom }}</td>
-                <td>{{ chantier.adresse }}</td>
-                <td>{{ chantier.dateDebut ? chantier.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ chantier.dateFin ? chantier.dateFin|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_chantier_show', {'id': chantier.id}) }}">show</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
+            {% for chantier in chantiers %}
+                <tr>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{{ chantier.id }}</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{{ chantier.nom }}</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{{ chantier.adresse }}</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{{ chantier.dateDebut ? chantier.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{{ chantier.dateFin ? chantier.dateFin|date('Y-m-d H:i:s') : '' }}</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">
+                        <a href="{{ path('app_chantier_show', {'id': chantier.id}) }}">Show</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6" style="padding: 10px; border: 1px solid #ddd; text-align: center;">No records found</td>
+                </tr>
+            {% endfor %}
         </tbody>
-    </table>    
-
+    </table>
+</div>
 {% endblock %}
