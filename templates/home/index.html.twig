@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CKOLESSO BTP - Accueil</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+     
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .background-image {
+            background-image: url('https://images.unsplash.com/photo-1590221896052-ee18875fcc59?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+
+        .navbar {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.5); 
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white !important;
+            text-decoration: none;
+        }
+
+        .navbar-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-links a, .navbar-links span {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+
+        .navbar-links a:hover {
+            text-decoration: underline;
+        }
+
+        .logo {
+            width: 150px;
+            margin-bottom: 1rem;
+        }
+
+        .jumbotron {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 2rem;
+            border-radius: 10px;
+        }
+
+        .jumbotron h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .jumbotron p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <a href="/">CKOLESSO BTP</a>
+        </div>
+        <div class="navbar-links">
+            {% if app.user %}
+                <a href="/chantier">Chantier</a>
+                <a></a>
+                <span>{{ app.user.email }}</span>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="/admin">Admin</a>
+                {% endif %}
+                <a href="{{ path('app_logout') }}">Déconnexion</a>
+            {% else %}
+                <a href="{{ path('app_login') }}">Connexion</a>
+            {% endif %}
+        </div>
+    </nav>
+
+
+    <div class="background-image">
+        <img src="https://img.freepik.com/vecteurs-libre/logo-entreprise-construction-design-plat_23-2150051903.jpg" alt="Logo CKOLESSO BTP" class="logo"> 
+        <div class="jumbotron">
+            <h1>CKOLESSO BTP</h1>
+            <p>
+                Chers collaborateurs,
+                Bienvenue sur la plateforme interne de CKOLESSO BTP ! Cet espace est conçu pour vous faciliter l’accès aux informations sur les chantiers 
+                .Ensemble, bâtissons un avenir solide en alliant savoir-faire, 
+                engagement et esprit d’équipe.
+                Restons connectés et avançons main dans la main vers de nouveaux projets ambitieux ! 💪🏗️
+                Bonne journée à tous !
+            </p>
+            {% if app.user %}
+             <a href="/chantier" class="btn btn-primary">Voir mes chantiers</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -51,6 +51,11 @@ class Employee
         $this->affectations = new ArrayCollection();
     }
 
+    public function __toString(): string
+    {
+        return $this->nom . ' ' . $this->prenom;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -67,6 +72,8 @@ class Employee
 
         return $this;
     }
+
+
 
     public function getPrenom(): ?string
     {
@@ -183,5 +190,13 @@ class Employee
         }
 
         return $this;
+    }
+
+    private $user;
+
+
+    public function getUser(): ?User
+    {
+        return $this->user;
     }
 }
