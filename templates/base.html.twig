@@ -43,6 +43,20 @@
                 a:hover {
                     text-decoration: underline;
                 }
+                .navbar {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    background-color: #f8f9fa;
+                    padding: 1rem;
+                }
+                .navbar a {
+                    margin: 0 1rem;
+                }
+                .navbar a, .navbar span {
+                    margin: 0 1rem;
+                    color: #000; 
+                }
             </style>
         {% endblock %}
         {% block javascripts %}
@@ -52,11 +66,27 @@
     <body>
         <div class="container">
             <header>
-                <h1>{% block header %}Mon Site Symfony{% endblock %}</h1>
+                <nav class="navbar">
+                    <div class="navbar-brand">
+                        <a href="/">CKOLESSO BTP</a>
+                    </div>
+                    <div class="navbar-links">
+                        {% if app.user %}
+                            <span>{{ app.user.email }}</span>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a href="/admin">Admin</a>
+                            {% endif %}
+                            <a href="{{ path('app_logout') }}">Logout</a>
+                        {% else %}
+                            <a href="{{ path('app_login') }}">Login</a>
+                        {% endif %}
+                    </div>
+                </nav>
+                <h1>{% block header %}CKOLESSO BTP{% endblock %}</h1>
             </header>
             {% block body %}{% endblock %}
             <footer>
-                <p>&copy; {{ "now"|date("Y") }} - Mon Site Symfony. Tous droits réservés.</p>
+                <p>&copy; {{ "now"|date("Y") }} - CKOLESSO BTP.</p>
             </footer>
         </div>
     </body>
