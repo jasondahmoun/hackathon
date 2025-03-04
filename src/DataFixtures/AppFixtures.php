@@ -7,9 +7,7 @@ use Doctrine\Persistence\ObjectManager;
 use App\Entity\User;
 use App\Entity\Employee;
 use App\Entity\Chantier;
-use App\Entity\Affectation;
 use App\Entity\Besoin;
-use App\Entity\Competence;
 use Faker\Factory;
 
 class AppFixtures extends Fixture
@@ -28,28 +26,10 @@ class AppFixtures extends Fixture
         // Liste des types de poste prédéfinis
         $typesDePoste = ['Maçon', 'Électricien', 'Plombier', 'Chauffagiste'];
 
-        // Compétences associées à chaque type de poste
-        $competencesParType = [
-            'Maçon' => ['Construction de murs', 'Pose de carrelage', 'Réparation de façades'],
-            'Électricien' => ['Installation électrique', 'Dépannage électrique', 'Mise en conformité'],
-            'Plombier' => ['Installation sanitaire', 'Réparation de fuites', 'Pose de chauffe-eau'],
-            'Chauffagiste' => ['Installation de chaudières', 'Entretien de chauffage', 'Dépannage de chauffage'],
-        ];
 
         // Créer l'utilisateur admin
         $admin = $this->createUser('admin@example.com', 'pass_1234', ['ROLE_ADMIN']);
         $manager->persist($admin);
-
-        // Créer des compétences pour chaque type de poste
-        $competences = [];
-        foreach ($competencesParType as $type => $competenceNames) {
-            foreach ($competenceNames as $name) {
-                $competence = new Competence();
-                $competence->setNom($name);
-                $manager->persist($competence);
-                $competences[$type][] = $competence;
-            }
-        }
 
         // Créer 5 chantiers
         $chantiers = [];
@@ -86,12 +66,6 @@ class AppFixtures extends Fixture
             $employee->setDisponibilite(true);
             $manager->persist($employee);
             $employees[] = $employee;
-
-            // Associer des compétences en fonction du poste
-            $randomCompetences = $faker->randomElements($competences[$typePoste], $faker->numberBetween(1, 3));
-            foreach ($randomCompetences as $competence) {
-                $employee->addCompetence($competence);
-            }
         }
 
         // Créer 10 utilisateurs et les associer aux employés

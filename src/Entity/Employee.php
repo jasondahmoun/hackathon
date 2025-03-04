@@ -42,20 +42,13 @@ class Employee
     /**
      * @var Collection<int, Affectation>
      */
-    #[ORM\OneToMany(targetEntity: Affectation::class, mappedBy: 'emplye')]
+    #[ORM\OneToMany(targetEntity: Affectation::class, mappedBy: 'employe')]
     private Collection $affectations;
-
-    /**
-     * @var Collection<int, Competence>
-     */
-    #[ORM\ManyToMany(targetEntity: Competence::class, inversedBy: 'employees')]
-    private Collection $competences;
 
     public function __construct()
     {
         $this->chantiers = new ArrayCollection();
         $this->affectations = new ArrayCollection();
-        $this->competences = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -188,30 +181,6 @@ class Employee
                 $affectation->setEmploye(null);
             }
         }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Competence>
-     */
-    public function getCompetences(): Collection
-    {
-        return $this->competences;
-    }
-
-    public function addCompetence(Competence $competence): static
-    {
-        if (!$this->competences->contains($competence)) {
-            $this->competences->add($competence);
-        }
-
-        return $this;
-    }
-
-    public function removeCompetence(Competence $competence): static
-    {
-        $this->competences->removeElement($competence);
 
         return $this;
     }
