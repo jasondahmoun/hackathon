@@ -11,6 +11,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 
 class AffectationCrudController extends AbstractCrudController
 {
@@ -30,13 +31,15 @@ class AffectationCrudController extends AbstractCrudController
     {
         return [
             AssociationField::new('employe')
-                ->setFormTypeOption('choice_label', 'nom')
-                ->setLabel('Employé'),
+            ->setFormTypeOption('choice_label', function (Employee $employee) {
+                return $employee->getNom() . ' (' . $employee->getRole() . ')';
+            })
+            ->setLabel('Employé'),
             AssociationField::new('chantier')
                 ->setFormTypeOption('choice_label', 'nom')
                 ->setLabel('Chantier'),
-            DateTimeField::new('start_date')->setLabel('Date de début'),
-            DateTimeField::new('end_date')->setLabel('Date de fin'),
+            DateField::new('start_date')->setLabel('Date de début'),
+            DateField::new('end_date')->setLabel('Date de fin'),
         ];
     }
 
@@ -47,50 +50,67 @@ class AffectationCrudController extends AbstractCrudController
         $chantier = $entityInstance->getChantier();
         $startDate = $entityInstance->getStartDate();
         $endDate = $entityInstance->getEndDate();
-
-        // Vérification du rôle de l'employé et mise à jour du besoin
-        if (!$this->matchRoleAndUpdateBesoin($employe, $chantier)) {
-            throw new \Exception("Le besoin pour ce type de poste a été comblé ou l'employé ne correspond pas au rôle requis.");
+    
+        // Vérification que la date de début n'est pas supérieure à la date de fin
+        if ($startDate > $endDate) {
+            $this->addFlash('danger', 'La date de début ne peut pas être supérieure à la date de fin.');
+            return;
         }
-
+    
+        // Vérification des dates du chantier
+        $chantierStart = $chantier->getDateDebut();
+        $chantierEnd = $chantier->getDateFin();
+    
+        if ($startDate < $chantierStart || $endDate > $chantierEnd) {
+            $this->addFlash('danger', 'Les dates de l\'affectation doivent être comprises entre les dates du chantier.');
+            return;
+        }
+    
         // Vérification de la disponibilité
         if ($this->isEmployeBusy($employe, $startDate, $endDate)) {
-            throw new \Exception("L'employé est déjà affecté à un autre chantier pendant cette période.");
+            $this->addFlash('danger', 'L\'employé est déjà affecté à un autre chantier pendant cette période.');
+            return;
         }
-
+    
+        // Vérification du besoin
+        $besoin = $this->findMatchingBesoin($employe, $chantier);
+        if (!$besoin || $besoin->getNombreRequis() <= 0) {
+            $this->addFlash('danger', 'Le besoin pour ce type de poste a été comblé ou le rôle ne correspond pas.');
+            return;
+        }
+    
+        // Mise à jour du besoin
+        $besoin->setNombreRequis($besoin->getNombreRequis() - 1);
+        $this->entityManager->persist($besoin);
+    
         parent::persistEntity($entityManager, $entityInstance);
     }
-
-    private function matchRoleAndUpdateBesoin(Employee $employe, Chantier $chantier): bool
+    
+    private function findMatchingBesoin(Employee $employe, Chantier $chantier): ?Besoin
     {
-        // Récupérer les besoins du chantier
-        $besoins = $chantier->getBesoins();
-
-        foreach ($besoins as $besoin) {
+        foreach ($chantier->getBesoins() as $besoin) {
             if ($besoin->getTypePoste() === $employe->getRole() && $besoin->getNombreRequis() > 0) {
-                // Décrémenter le nombre requis
-                $besoin->setNombreRequis($besoin->getNombreRequis() - 1);
-                $this->entityManager->persist($besoin);
-                $this->entityManager->flush();
-                return true;
+                return $besoin;
             }
         }
-
-        return false;
+        return null;
     }
+
 
     private function isEmployeBusy(Employee $employe, \DateTime $startDate, \DateTime $endDate): bool
     {
-        // Logique pour vérifier si l'employé est déjà affecté à un autre chantier pendant cette période
         foreach ($employe->getAffectations() as $affectation) {
-            $affectationStart = $affectation->getStartDate();
-            $affectationEnd = $affectation->getEndDate();
-
-            if ($affectationStart <= $endDate && $affectationEnd >= $startDate) {
+            if ($affectation->getId() === $this->getContext()->getEntity()->getPrimaryKeyValue()) {
+                continue; // Ignore l'affectation actuelle en cas d'édition
+            }
+    
+            $existingStart = $affectation->getStartDate();
+            $existingEnd = $affectation->getEndDate();
+    
+            if ($startDate <= $existingEnd && $endDate >= $existingStart) {
                 return true;
             }
         }
-
         return false;
     }
 }
