@@ -1,4 +1,6 @@
 <?php
+
+
 namespace App\DataFixtures;
 
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;

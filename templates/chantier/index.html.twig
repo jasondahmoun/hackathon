@@ -26,7 +26,6 @@
                 <td>{{ chantier.dateFin ? chantier.dateFin|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('app_chantier_show', {'id': chantier.id}) }}">show</a>
-                    <a href="{{ path('app_chantier_edit', {'id': chantier.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -35,7 +34,6 @@
             </tr>
         {% endfor %}
         </tbody>
-    </table>
+    </table>    
 
-    <a href="{{ path('app_chantier_new') }}">Create new</a>
 {% endblock %}
